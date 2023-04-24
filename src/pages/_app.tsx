@@ -6,6 +6,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { theme } from '../styles/theme';
 import { queryClient } from '../services/queryClient';
 import { AuthProvider } from '../contexts/authContext';
+import '@fontsource/poppins';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
