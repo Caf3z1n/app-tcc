@@ -7,13 +7,13 @@ import { parseISO, format } from 'date-fns';
 import { Pagination } from '../../components/Pagination';
 import { useState } from 'react';
 import { useAdminPalestras } from '../../services/hooks/useAdminPalestras';
-import { DetalhesPalestra } from '../../components/DetalhesPalestra';
+import { DetalhesPalestra } from '../../components/PalestrantePalestra';
 import { parseCookies } from 'nookies';
 import decode from 'jwt-decode';
 
 export default function Eventos() {
   const [page, setPage] = useState(1)
-  const { data, isLoading } = useAdminPalestras({ page })
+  const { data, isLoading, refetch } = useAdminPalestras({ page })
   
   return (
     <>
@@ -42,7 +42,7 @@ export default function Eventos() {
                           return (
                             <Tr key={palestra.id}>
                               <Td fontWeight="bold" color="cores.laranja">{palestra.nome}</Td>
-                              <Td fontWeight="medium" color="cores.cinza">{palestra.tipo === 0 ? 'Presencial' : palestra.tipo === 1 ? 'Híbrida': 'Virtual'}</Td>
+                              <Td fontWeight="medium" color="cores.cinza">{palestra.tipo === 0 ? 'Presencial' : palestra.tipo === 1 ? 'Presencial e Virtual': 'Virtual'}</Td>
                               <Td fontWeight="medium" color="cores.cinza">{format(parseISO(palestra.data_inicio), 'dd/MM/yyyy HH:mm')}</Td>
                               <Td fontWeight="medium" color="cores.cinza">{format(parseISO(palestra.data_fim), 'dd/MM/yyyy HH:mm')}</Td>
                               <Td>
@@ -55,7 +55,7 @@ export default function Eventos() {
                                 }
                                 </Td>
                               <Td>
-                                <DetalhesPalestra palestra={palestra} />
+                                <DetalhesPalestra refetch={refetch} palestra={palestra} />
                               </Td>
                             </Tr>
                           )

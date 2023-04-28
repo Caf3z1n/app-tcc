@@ -2,6 +2,8 @@ import {
   Box,
   Button,
   Flex,
+  Grid,
+  GridItem,
   Icon,
   Image,
   Modal,
@@ -17,45 +19,78 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import { format, parseISO } from 'date-fns';
+import { useState } from 'react';
 import { RiExternalLinkFill } from 'react-icons/ri'
 import { api } from '../../services/apiClient';
 import { Palestra } from '../../services/hooks/useSolicitacaoPalestras'
+import { Input } from '../Form/Input';
 
 type AprovarReprovarPalestraProps = {
   palestra: Palestra;
   refetch: () => void;
 }
 
-export function AprovarReprovarPalestra({ palestra, refetch }: AprovarReprovarPalestraProps) {
+export function DetalhesPalestra({ palestra, refetch }: AprovarReprovarPalestraProps) {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const [link, setLink] = useState(palestra.link);
+  const [loading, setLoading] = useState(false)
+  const [loading2, setLoading2] = useState(false)
   const toast = useToast();
 
-  async function handleAceitarRecusar(criar) {
+  async function handleSalvarLink() {
+    setLoading(true);
     try {
-      await api.put(`/solicitar-palestras/${palestra.id}`, {
-        criar
+      await api.post(`/palestras/${palestra.id}`, {
+        link
       })
 
       toast({
-        title: "Palestra aprovada/reprovada com sucesso",
-        description: "Se aprovado agora é só esperar o dia da palestra",
+        title: "Link salvo com sucesso",
+        description: "O link será redistribuido caso seja o horário da palestra",
         status: "success",
         duration: 2000,
         isClosable: true,
       })
     }catch (err) {
       toast({
-        title: "Erro ao aprovar/reprovar palestra",
+        title: "Erro ao salvar palestra",
         description: "Tente novamente mais tarde",
         status: "error",
         duration: 2000,
         isClosable: true,
       })
     }
+    setLoading(false);
     onClose()
     refetch()
   }
 
+  async function handleCancelarPalestra() {
+    setLoading2(true);
+    try {
+      await api.delete(`/palestras/${palestra.id}`)
+
+      toast({
+        title: "Palestra cancelada com sucesso",
+        description: "Observação: só é possivel cancelar a palestra antes de ser aprovada",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      })
+    }catch (err) {
+      toast({
+        title: "Erro ao cancelar palestra",
+        description: "Tente novamente mais tarde",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      })
+    }
+    setLoading2(false);
+    onClose()
+    refetch()
+  }
+  
   return (
     <>
       <Button
@@ -87,7 +122,7 @@ export function AprovarReprovarPalestra({ palestra, refetch }: AprovarReprovarPa
                 <Text fontWeight="medium" mb="0.8rem" fontSize="1.3rem">Palestrante</Text>
                 <Flex mb="1rem" alignItems="center">
                   <Text mr="0.5rem">Foto: </Text>
-                  <Image objectFit="cover" borderRadius="50%" alt="teste" src={palestra.palestrante.foto.url} w="5rem" h="5rem" />
+                  <Image objectFit="cover" borderRadius="50%" alt="FOTO" src={palestra.palestrante.foto.url} w="5rem" h="5rem" />
                 </Flex>
                 <Text mb="0.3rem">Nome: <strong>{palestra.palestrante.nome}</strong></Text>
                 <Text mb="0.3rem">Email: {palestra.palestrante.email}</Text>
@@ -111,23 +146,39 @@ export function AprovarReprovarPalestra({ palestra, refetch }: AprovarReprovarPa
                 <Text mb="0.3rem">Dia da palestra: {format(parseISO(palestra.data_inicio), 'dd/MM/yyyy')}</Text>
                 <Text mb="0.3rem">Horário do inicio: <strong>{format(parseISO(palestra.data_inicio), 'HH:mm')}</strong></Text>
                 <Text mb="0.3rem">Horário do Fim: <strong>{format(parseISO(palestra.data_fim), 'HH:mm')}</strong></Text>
+                <Grid w="100%" gap="4" templateColumns="repeat(1, 1fr)" mt="1rem">
+                  <GridItem colSpan={1}>
+                    <Input
+                      name="link"
+                      label="Link da palestra:"
+                      placeholder="Preencher se já tiver o link da transmissão"
+                      value={link}
+                      onChange={(e) =>setLink(e.target.value)}
+                    />
+                  </GridItem>
+                </Grid>
               </Box>
             </VStack>
           </ModalBody>
           <ModalFooter>
-            <Button
-              type="button"
-              colorScheme="red"
-              color="cores.branco"
-              size="md"
-              _focus={{
-                boxShadow: 'none'
-              }}
-              onClick={() => handleAceitarRecusar(false)}
-              mr="1rem"
-            >
-              Recusar
-            </Button>
+            {
+              palestra.ativo === null && (
+                <Button
+                  type="button"
+                  colorScheme="red"
+                  color="cores.branco"
+                  size="md"
+                  _focus={{
+                    boxShadow: 'none'
+                  }}
+                  mr="1rem"
+                  onClick={handleCancelarPalestra}
+                  isLoading={loading2}
+                >
+                  Cancelar palestra
+                </Button>
+              )
+            }
             <Button
               type="button"
               colorScheme="green"
@@ -136,9 +187,10 @@ export function AprovarReprovarPalestra({ palestra, refetch }: AprovarReprovarPa
               _focus={{
                 boxShadow: 'none'
               }}
-              onClick={() => handleAceitarRecusar(true)}
+              onClick={handleSalvarLink}
+              isLoading={loading}
             >
-              Aprovar
+              Salvar
             </Button>
           </ModalFooter>
         </ModalContent>

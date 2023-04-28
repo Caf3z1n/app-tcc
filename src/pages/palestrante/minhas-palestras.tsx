@@ -6,14 +6,15 @@ import Header from "../../components/Header";
 import { parseISO, format } from 'date-fns';
 import { Pagination } from '../../components/Pagination';
 import { useState } from 'react';
-import { DetalhesPalestra } from '../../components/DetalhesPalestra';
+import { DetalhesPalestra } from '../../components/PalestrantePalestra';
 import { useMinhasPalestras } from '../../services/hooks/useMinhasPalestras';
 import { parseCookies } from 'nookies';
 import decode from 'jwt-decode'
+import { NovaPalestra } from '../../components/PalestrantePalestra/NovaPalestra';
 
 export default function MinhasPalestras() {
   const [page, setPage] = useState(1)
-  const { data, isLoading } = useMinhasPalestras({ page })
+  const { data, isLoading, refetch } = useMinhasPalestras({ page })
   
   return (
     <>
@@ -25,6 +26,9 @@ export default function MinhasPalestras() {
             {
               !isLoading && !!data && data.palestras.length >= 1 && (
                 <>
+                  <Flex w="100%" justifyContent="right" mb="2rem">
+                    <NovaPalestra refetch={refetch} />
+                  </Flex>
                   <Table overflowX="auto">
                     <Thead>
                       <Tr textAlign="center">
@@ -42,7 +46,7 @@ export default function MinhasPalestras() {
                           return (
                             <Tr key={palestra.id}>
                               <Td fontWeight="bold" color="cores.laranja">{palestra.nome}</Td>
-                              <Td fontWeight="medium" color="cores.cinza">{palestra.tipo === 0 ? 'Presencial' : palestra.tipo === 1 ? 'Híbrida': 'Virtual'}</Td>
+                              <Td fontWeight="medium" color="cores.cinza">{palestra.tipo === 0 ? 'Presencial' : palestra.tipo === 1 ? 'Presencial e Virtual': 'Virtual'}</Td>
                               <Td fontWeight="medium" color="cores.cinza">{format(parseISO(palestra.data_inicio), 'dd/MM/yyyy HH:mm')}</Td>
                               <Td fontWeight="medium" color="cores.cinza">{format(parseISO(palestra.data_fim), 'dd/MM/yyyy HH:mm')}</Td>
                               <Td>
@@ -55,7 +59,7 @@ export default function MinhasPalestras() {
                                 }
                                 </Td>
                               <Td>
-                                <DetalhesPalestra palestra={palestra} />
+                                <DetalhesPalestra refetch={refetch} palestra={palestra} />
                               </Td>
                             </Tr>
                           )

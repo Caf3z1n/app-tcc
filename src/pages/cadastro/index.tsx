@@ -1,4 +1,4 @@
-import { Flex, Stack, Button, Image, Text }  from '@chakra-ui/react';
+import { Flex, Stack, Button, Image, Text, Container }  from '@chakra-ui/react';
 import Router from 'next/router';
 
 import { withSSRGuest } from '../../utils/withSSRGuest';
@@ -6,10 +6,9 @@ import { withSSRGuest } from '../../utils/withSSRGuest';
 export default function Seletor() {
   return (
     <Flex
-      w="100vw"
       h="100vh"
-      align="center"
-      justify="center"
+      alignItems="center"
+      justifyContent="center"
     >
       <Flex
         as="form"
@@ -19,6 +18,7 @@ export default function Seletor() {
         bg="cores.branco"
         borderRadius="0.5rem"
         alignItems="center"
+        justifyContent="center"
         flexDir="column"
         border="2px"
         borderColor="cores.cinzaBorda"

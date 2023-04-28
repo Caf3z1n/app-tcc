@@ -31,7 +31,7 @@ type useTodosEventosProps = {
 }
 
 export async function getTodosEventos({ page }: getTodosEventosProps): Promise<getTodosEventosResponse> {
-  const { data } = await api.get(`/eventos`);
+  const { data } = await api.get(`/eventos?paginaAtual=${page}`);
 
   return {
     eventos: data.eventos,

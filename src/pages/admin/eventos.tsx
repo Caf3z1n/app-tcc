@@ -46,8 +46,8 @@ export default function Eventos() {
                           return (
                             <Tr key={evento.id}>
                               <Td fontWeight="bold" color="cores.cinzaEscuro">{evento.nome}</Td>
-                              <Td fontWeight="medium" color="cores.cinza" fontSize="0.8rem">{evento.descricao}</Td>
-                              <Td fontWeight="bold" color="cores.laranja">{evento.palestras.length}</Td>
+                              <Td fontWeight="medium" color="cores.cinza" fontSize="0.9rem">{evento.descricao}</Td>
+                              <Td fontWeight="bold" color="cores.laranja" fontSize="1.1rem" textAlign="center">{evento.palestras.length}</Td>
                               <Td fontWeight="medium" color="cores.cinza">{format(parseISO(evento.data_inicio), 'dd/MM/yyyy')}</Td>
                               <Td fontWeight="medium" color="cores.cinza">{format(parseISO(evento.data_fim), 'dd/MM/yyyy')}</Td>
                               <Td textAlign="right">

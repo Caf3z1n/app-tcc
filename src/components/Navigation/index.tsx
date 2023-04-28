@@ -1,6 +1,6 @@
 import { Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Stack } from '@chakra-ui/react'
 import { useContext } from 'react'
-import { RiUserFollowLine, RiCheckboxMultipleLine, RiCalendarEventLine, RiVideoChatLine } from 'react-icons/ri'
+import { RiUserFollowLine, RiCheckboxMultipleLine, RiCalendarEventLine, RiVideoChatLine, RiUser3Line, RiUserSettingsLine } from 'react-icons/ri'
 import { AuthContext } from '../../contexts/authContext'
 import { NavLink } from './NavLink'
 import { NavSection } from './NavSection'
@@ -35,6 +35,9 @@ export function Navigation({ isOpen, OpenCloseNavigation }: NavigationProps) {
                       </NavLink>
                     </NavSection>
                     <NavSection title="GERENCIAL">
+                      <NavLink href="/admin/usuarios" icon={RiUser3Line}>
+                        Usuários
+                      </NavLink>
                       <NavLink href="/admin/eventos" icon={RiCalendarEventLine}>
                         Eventos
                       </NavLink>
@@ -54,6 +57,11 @@ export function Navigation({ isOpen, OpenCloseNavigation }: NavigationProps) {
                   </>
                 )
               }
+              <NavSection title="MEU PERFIL">
+                <NavLink href="/meu-perfil" icon={RiUserSettingsLine}>
+                  Editar perfil
+                </NavLink>
+              </NavSection>
             </Stack>
           </DrawerBody>
         </DrawerContent>

@@ -41,7 +41,7 @@ export default function AprovarPalestras() {
                               </Td>
                               <Td fontWeight="bold" color="cores.cinzaEscuro">{palestra.palestrante.nome}</Td>
                               <Td fontWeight="medium" color="cores.laranja">{palestra.nome}</Td>
-                              <Td fontWeight="medium" color="cores.cinza">{palestra.tipo === 0 ? 'Presencial' : palestra.tipo === 1 ? 'Híbrida': 'Virtual'}</Td>
+                              <Td fontWeight="medium" color="cores.cinza">{palestra.tipo === 0 ? 'Presencial' : palestra.tipo === 1 ? 'Presencial e Virtual': 'Virtual'}</Td>
                               <Td fontWeight="medium" color="cores.cinza">{palestra.evento.nome}</Td>
                               <Td textAlign="right">
                                 <AprovarReprovarPalestra refetch={refetch} palestra={palestra} />
