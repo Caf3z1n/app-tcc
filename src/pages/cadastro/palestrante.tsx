@@ -89,10 +89,11 @@ export default function CadastroPalestrante() {
 
   return (
     <Flex
-      h="100vh"
+      h="100%"
       align="center"
       justify="center"
       flexDirection="column"
+      p="4rem 0"
     >
       <Flex
         as="form"
