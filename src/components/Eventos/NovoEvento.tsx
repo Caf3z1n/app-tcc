@@ -22,6 +22,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { RiAddLine } from 'react-icons/ri'
 import * as yup from 'yup';
 import { api } from '../../services/apiClient';
+import { addHours } from 'date-fns'
 
 import { Input } from '../Form/Input';
 import Periodo from '../Periodo';
@@ -68,9 +69,10 @@ export function NovoEvento({ refetch }: NovoEventoProps) {
           nome,
           descricao,
           local,
-          data_inicio: selectedDates[0],
+          data_inicio: addHours(selectedDates[0], 6),
           data_fim: selectedDates[1]
         })
+        console.log(selectedDates)
   
         toast({
           title: "Evento cadastrado com sucesso",
@@ -81,8 +83,8 @@ export function NovoEvento({ refetch }: NovoEventoProps) {
         })
   
         onClose();
-        refetch();
-        Router.reload();
+        //refetch();
+        //Router.reload();
       } catch (err) {
         toast({
           title: "Erro ao cadastrar o evento",
