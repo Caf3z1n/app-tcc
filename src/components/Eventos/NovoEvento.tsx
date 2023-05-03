@@ -72,7 +72,6 @@ export function NovoEvento({ refetch }: NovoEventoProps) {
           data_inicio: addDays(selectedDates[0], 1),
           data_fim: selectedDates[1]
         })
-        console.log(selectedDates)
   
         toast({
           title: "Evento cadastrado com sucesso",
