@@ -22,7 +22,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { RiAddLine } from 'react-icons/ri'
 import * as yup from 'yup';
 import { api } from '../../services/apiClient';
-import { addHours } from 'date-fns'
+import { addDays } from 'date-fns'
 
 import { Input } from '../Form/Input';
 import Periodo from '../Periodo';
@@ -69,7 +69,7 @@ export function NovoEvento({ refetch }: NovoEventoProps) {
           nome,
           descricao,
           local,
-          data_inicio: addHours(selectedDates[0], 6),
+          data_inicio: addDays(selectedDates[0], 1),
           data_fim: selectedDates[1]
         })
         console.log(selectedDates)
