@@ -20,8 +20,13 @@ type AuthContextData = {
   signIn: (credentials: SignInCredentials) => Promise<void>;
   signOut: () => void;
   isAuthenticated: boolean;
-  nome: String;
+  nome: string;
+  email: string;
   nivel: number;
+  foto?: {
+    url: string,
+    id: number
+  };
 }
 
 type AuthProviderProps = {
@@ -48,6 +53,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User>();
   const [nivel, setNivel] = useState(2);
   const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [foto, setFoto] = useState(null);
   const isAuthenticated = !!user;
 
   useEffect(() => {
@@ -69,7 +76,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     if (token) {
       api.get('/me').then(async response => {
-        const { id, nome, email, nivel } = response.data;
+        const { id, nome, email, nivel, foto } = response.data;
         setUser({
           id,
           nome,
@@ -79,6 +86,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
         
         setNome(nome);
         setNivel(nivel);
+        setEmail(email);
+        if(foto) {
+          setFoto({
+            preview: foto.url,
+            id: foto.id
+          })
+        }
       })
       .catch(() => {
         signOut()
@@ -113,7 +127,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   return (
-    <AuthContext.Provider value={{ signIn, signOut, isAuthenticated, nome, nivel }}>
+    <AuthContext.Provider value={{ signIn, signOut, isAuthenticated, nome, nivel, email, foto }}>
       {children}
     </AuthContext.Provider>
   )

@@ -1,14 +1,49 @@
-import { Button, Flex, FormLabel, Stack, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { Button, Flex, FormLabel, Stack, Text, useToast } from "@chakra-ui/react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useContext, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import * as yup from 'yup';
 import { Input } from "../components/Form/Input";
 import Header from "../components/Header";
 import UploadImage from "../components/UploadImage";
-import { signOut } from "../contexts/authContext";
+import { AuthContext, signOut } from "../contexts/authContext";
 import { withSSRAuth } from "../utils/withSSRAuth";
 
+type MeuPerfilFormData = {
+  nome?: string;
+  email?: string;
+  oldPassword?: string;
+  password?: string;
+  confirmPassword?: string;
+}
+
+const MeuPerfilFormSchema = yup.object().shape({
+  nome: yup.string(),
+  email: yup.string(),
+  oldPassword: yup.string(),
+  password: yup.string(),
+  confirmPassword: yup.string().when('password', (password, field) =>
+    password ? field.oneOf([yup.ref('password')], 'Senhas não coincide') : field
+  ),
+})
+
+
 export default function MeuPerfil() {
-  const [imagem, setImagem] = useState(null);
-  const [idFoto, setIdFoto] = useState(null);
+  const { nome, email, foto } = useContext(AuthContext);
+
+  const [imagem, setImagem] = useState(foto);
+  const [idFoto, setIdFoto] = useState(foto !== null ? foto.id : null);
+
+  const { register, handleSubmit, formState } = useForm<MeuPerfilFormData>({
+    resolver: yupResolver(MeuPerfilFormSchema),
+  })
+
+  const { errors } = formState;
+  const toast = useToast();
+
+  const handleMeuPerfil: SubmitHandler<MeuPerfilFormData> = async ({ nome, email, password, confirmPassword }) => {
+    console.log('FOI')
+  }
 
   return (
     <>
@@ -26,6 +61,7 @@ export default function MeuPerfil() {
           border="2px"
           borderColor="cores.cinzaBorda"
           shadow="lg"
+          onSubmit={handleSubmit(handleMeuPerfil)}
         >
           <Text color="cores.cinzaEscuro" fontSize="1.5rem" mb="2rem" fontWeight="medium">Editar perfil</Text>
           <Stack spacing="1rem" width="100%">
@@ -34,37 +70,45 @@ export default function MeuPerfil() {
               <UploadImage imagem={imagem} setImagem={setImagem} setIdFoto={setIdFoto} />
             </Flex>
             <Input
-              name="usuário"
+              name="nome"
               label="Nome completo"
-              defaultValue="Pedro Henrique Sanches Galvão"
+              defaultValue={nome}
+              {...register('nome')}
+              error={errors.nome}
             />
             <Input
-              name="usuário"
+              name="email"
               label="Email"
               type="email"
-              defaultValue="admin@admin.com"
+              defaultValue={email}
+              {...register('email')}
+              error={errors.email}
+              autoFocus
             />
             <Input
-              name="senha"
+              name="oldPassword"
               label="Senha atual"
               type="password"
-              mb="1rem"
+              {...register('oldPassword')}
+              error={errors.oldPassword}
             />
             <Input
-              name="senha"
+              name="password"
               label="Nova senha"
               type="password"
-              mb="1rem"
+              {...register('password')}
+              error={errors.password}
             />
             <Input
-              name="senha"
+              name="confirmPassword"
               label="Confirmar nova senha"
               type="password"
-              mb="1rem"
+              {...register('confirmPassword')}
+              error={errors.confirmPassword}
+              mb="2rem"
             />
             <Button
               type="submit"
-              mt="1.75rem"
               colorScheme="green"
               size="lg"
               _focus={{
