@@ -23,6 +23,7 @@ import { RiAddLine } from 'react-icons/ri'
 import * as yup from 'yup';
 import { api } from '../../services/apiClient';
 import { useHomeEventos } from '../../services/hooks/useHomeEventos';
+import { addHours, parseISO } from 'date-fns'
 
 import { Input } from '../Form/Input';
 import SelectEvento from './SelectEvento';
@@ -70,8 +71,8 @@ export function NovaPalestra({ refetch }: NovaPalestraProps) {
         nome,
         descricao,
         local,
-        data_inicio,
-        data_fim,
+        data_inicio: addHours(parseISO(data_inicio), 3),
+        data_fim: addHours(parseISO(data_fim), 3),
         link,
         tipo,
         id_evento: evento
