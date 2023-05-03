@@ -83,8 +83,8 @@ export function NovoEvento({ refetch }: NovoEventoProps) {
         })
   
         onClose();
-        //refetch();
-        //Router.reload();
+        refetch();
+        Router.reload();
       } catch (err) {
         toast({
           title: "Erro ao cadastrar o evento",
