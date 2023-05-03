@@ -71,8 +71,8 @@ export function NovaPalestra({ refetch }: NovaPalestraProps) {
         nome,
         descricao,
         local,
-        data_inicio: addHours(parseISO(data_inicio), 3),
-        data_fim: addHours(parseISO(data_fim), 3),
+        data_inicio: parseISO(data_inicio),
+        data_fim: parseISO(data_fim),
         link,
         tipo,
         id_evento: evento
