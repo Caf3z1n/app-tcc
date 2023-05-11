@@ -41,6 +41,6 @@ export async function getUsuarios({ page }: getUsuariosProps): Promise<getUsuari
 
 export function useUsuarios({ page }: useUsuariosProps) {
   return useQuery(['usuarios', [{ page }]], () => getUsuarios({ page }), {
-    staleTime: 1000 * 1
+    staleTime: 1000 * 60
   })
 }

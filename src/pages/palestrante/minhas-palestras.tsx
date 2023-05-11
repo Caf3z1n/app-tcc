@@ -94,6 +94,13 @@ export const getServerSideProps = withSSRAuth(async (ctx) => {
         permanent: false,
       }
     }
+  }else if (token.nivel === 2) {
+    return {
+      redirect: {
+        destination: '/espectador/inscrever-se-palestras',
+        permanent: false,
+      }
+    }
   }
 
   return {

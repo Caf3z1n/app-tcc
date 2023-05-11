@@ -35,9 +35,11 @@ export type Palestra = {
   palestrante: Palestrante,
   evento: Evento,
   status: string;
+  porcentagem: number,
+  id_espectador_palestra: number,
 }
 
-type getAdminPalestrasResponse = {
+type getPalestrasInscritasResponse = {
   palestras: Palestra[];
   paginacao: {
     paginaAtual: number,
@@ -46,16 +48,16 @@ type getAdminPalestrasResponse = {
   };
 }
 
-type getAdminPalestrasProps = {
+type getPalestrasInscritasProps = {
   page: number,
 }
 
-type useAdminPalestrasProps = {
+type usePalestrasInscritasProps = {
   page: number,
 }
 
-export async function getAdminPalestras({ page }: getAdminPalestrasProps): Promise<getAdminPalestrasResponse> {
-  const { data } = await api.get('/admin-palestras');
+export async function getPalestrasInscritas({ page }: getPalestrasInscritasProps): Promise<getPalestrasInscritasResponse> {
+  const { data } = await api.get('/espectador-palestra');
 
   return {
     palestras: data.palestras,
@@ -63,8 +65,8 @@ export async function getAdminPalestras({ page }: getAdminPalestrasProps): Promi
   };
 }
 
-export function useAdminPalestras({ page }: useAdminPalestrasProps) {
-  return useQuery(['admin-palestras', [{ page }]], () => getAdminPalestras({ page }), {
+export function usePalestrasInscritas({ page }: usePalestrasInscritasProps) {
+  return useQuery(['palestras-inscritas', [{ page }]], () => getPalestrasInscritas({ page }), {
     staleTime: 1000 * 60
   })
 }

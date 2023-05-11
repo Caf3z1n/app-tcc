@@ -50,6 +50,6 @@ export async function getSolicitacaoPalestras(): Promise<getSolicitacaoPalestran
 
 export function useSolicitacaoPalestras() {
   return useQuery(['solicitacao-palestras'], () => getSolicitacaoPalestras(), {
-    staleTime: 1000 * 1
+    staleTime: 1000 * 60
   })
 }

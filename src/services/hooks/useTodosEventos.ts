@@ -41,6 +41,6 @@ export async function getTodosEventos({ page }: getTodosEventosProps): Promise<g
 
 export function useTodosEventos({ page }: useTodosEventosProps) {
   return useQuery(['todos-eventos', [{ page }]], () => getTodosEventos({ page }), {
-    staleTime: 1000 * 1
+    staleTime: 1000 * 60
   })
 }

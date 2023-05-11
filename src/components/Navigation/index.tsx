@@ -1,6 +1,6 @@
 import { Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Stack } from '@chakra-ui/react'
 import { useContext } from 'react'
-import { RiUserFollowLine, RiCheckboxMultipleLine, RiCalendarEventLine, RiVideoChatLine, RiUser3Line, RiUserSettingsLine } from 'react-icons/ri'
+import { RiUserFollowLine, RiCheckboxMultipleLine, RiCalendarEventLine, RiVideoChatLine, RiUser3Line, RiUserSettingsLine, RiVideoDownloadLine, RiPictureInPicture2Line } from 'react-icons/ri'
 import { AuthContext } from '../../contexts/authContext'
 import { NavLink } from './NavLink'
 import { NavSection } from './NavSection'
@@ -46,7 +46,7 @@ export function Navigation({ isOpen, OpenCloseNavigation }: NavigationProps) {
                       </NavLink>
                     </NavSection>
                   </>
-                ) : 
+                ) : nivel === 1 ?
                 (
                   <>
                     <NavSection title="PALESTRANTE">
@@ -54,10 +54,30 @@ export function Navigation({ isOpen, OpenCloseNavigation }: NavigationProps) {
                         Minhas palestras
                       </NavLink>
                     </NavSection>
+
+                    <NavSection title="ESPECTADOR">
+                      <NavLink href="/espectador/inscrever-se-palestras" icon={RiVideoDownloadLine}>
+                        Inscrever-se em palestras
+                      </NavLink>
+                      <NavLink href="/espectador/palestras-inscritas" icon={RiPictureInPicture2Line}>
+                        Minhas palestras inscritas
+                      </NavLink>
+                    </NavSection>
+                  </>
+                ) : (
+                  <>
+                    <NavSection title="ESPECTADOR">
+                      <NavLink href="/espectador/inscrever-se-palestras" icon={RiVideoDownloadLine}>
+                        Inscrever-se em palestras 
+                      </NavLink>
+                      <NavLink href="/espectador/palestras-inscritas" icon={RiPictureInPicture2Line}>
+                        Minhas palestras inscritas
+                      </NavLink>
+                    </NavSection>
                   </>
                 )
               }
-              <NavSection title="MEU PERFIL">
+              <NavSection title="MEU PERFIL"> 
                 <NavLink href="/meu-perfil" icon={RiUserSettingsLine}>
                   Editar perfil
                 </NavLink>

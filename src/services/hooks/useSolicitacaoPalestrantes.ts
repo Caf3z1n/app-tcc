@@ -40,6 +40,6 @@ export async function getSolicitacaoPalestrantes({ page }: getSolicitacaoPalestr
 
 export function useSolicitacaoPalestrantes({ page }: useSolicitacaoPalestrantesProps) {
   return useQuery(['solicitacao-palestrantes', [{ page }]], () => getSolicitacaoPalestrantes({ page }), {
-    staleTime: 1000 * 1
+    staleTime: 1000 * 60
   })
 }

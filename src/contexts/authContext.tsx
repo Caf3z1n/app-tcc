@@ -9,6 +9,10 @@ export type User = {
   nome: string;
   email: string;
   nivel: number;
+  foto?: {
+    preview: string,
+    id: number
+  };
 }
 
 type SignInCredentials = {
@@ -23,10 +27,11 @@ type AuthContextData = {
   nome: string;
   email: string;
   nivel: number;
-  foto?: {
-    url: string,
+  foto: {
+    preview: string,
     id: number
   };
+  user: User
 }
 
 type AuthProviderProps = {
@@ -76,21 +81,26 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     if (token) {
       api.get('/me').then(async response => {
-        const { id, nome, email, nivel, foto } = response.data;
+        const { id, nome, email, nivel } = response.data;
+        const fotinha = response.data.foto
         setUser({
           id,
           nome,
           email,
           nivel,
+          foto: fotinha !== null ? {
+            preview: fotinha.url,
+            id: fotinha.id
+          } : null
         })
-        
+
         setNome(nome);
         setNivel(nivel);
         setEmail(email);
-        if(foto) {
+        if(fotinha !== null) {
           setFoto({
-            preview: foto.url,
-            id: foto.id
+            preview: fotinha.url,
+            id: fotinha.id
           })
         }
       })
@@ -120,14 +130,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
       id: profile.id,
       nome: profile.nome,
       email: profile.email,
-      nivel: profile.nivel
+      nivel: profile.nivel,
     })
 
     Router.push('/admin/aprovar-palestrante');
   }
 
   return (
-    <AuthContext.Provider value={{ signIn, signOut, isAuthenticated, nome, nivel, email, foto }}>
+    <AuthContext.Provider value={{ signIn, signOut, isAuthenticated, nome, nivel, email, foto, user }}>
       {children}
     </AuthContext.Provider>
   )

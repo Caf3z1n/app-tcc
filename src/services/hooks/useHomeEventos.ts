@@ -27,6 +27,6 @@ export async function getHomeEventos(): Promise<getHomeEventosResponse> {
 
 export function useHomeEventos() {
   return useQuery(['home-eventos'], () => getHomeEventos(), {
-    staleTime: 1000 * 5
+    staleTime: 1000 * 60
   })
 }

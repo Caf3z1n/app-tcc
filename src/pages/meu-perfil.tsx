@@ -1,12 +1,13 @@
 import { Button, Flex, FormLabel, Stack, Text, useToast } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from 'yup';
 import { Input } from "../components/Form/Input";
 import Header from "../components/Header";
 import UploadImage from "../components/UploadImage";
 import { AuthContext, signOut } from "../contexts/authContext";
+import { api } from "../services/apiClient";
 import { withSSRAuth } from "../utils/withSSRAuth";
 
 type MeuPerfilFormData = {
@@ -29,10 +30,15 @@ const MeuPerfilFormSchema = yup.object().shape({
 
 
 export default function MeuPerfil() {
-  const { nome, email, foto } = useContext(AuthContext);
+  const { nome, email, user } = useContext(AuthContext);
 
-  const [imagem, setImagem] = useState(foto);
-  const [idFoto, setIdFoto] = useState(foto !== null ? foto.id : null);
+  const [imagem, setImagem] = useState(user?.foto || null);
+  const [idFoto, setIdFoto] = useState(user?.foto?.id || null);
+
+  useEffect (() => {
+    setImagem(user?.foto)
+    setIdFoto(user?.foto?.id)
+  }, [user])
 
   const { register, handleSubmit, formState } = useForm<MeuPerfilFormData>({
     resolver: yupResolver(MeuPerfilFormSchema),
@@ -41,8 +47,82 @@ export default function MeuPerfil() {
   const { errors } = formState;
   const toast = useToast();
 
-  const handleMeuPerfil: SubmitHandler<MeuPerfilFormData> = async ({ nome, email, password, confirmPassword }) => {
-    console.log('FOI')
+  const handleMeuPerfil: SubmitHandler<MeuPerfilFormData> = async ({ nome, email, oldPassword, password, confirmPassword }) => {
+    let data = {}
+    
+    if (nome !== '' && nome !== null) {
+      data = {
+        ...data,
+        nome
+      }
+    }
+
+    if (email !== '' && email !== null) {
+      data = {
+        ...data,
+        email
+      }
+    }
+
+    if (idFoto && idFoto !== null) {
+      data = {
+        ...data,
+        id_foto: idFoto
+      }
+    }
+
+    if (oldPassword !== '' && oldPassword !== null) {
+      data = {
+        ...data,
+        oldPassword
+      }
+    }
+
+    if (password !== '' && password !== null) {
+      data = {
+        ...data,
+        password
+      }
+    }
+
+    if (confirmPassword !== '' && confirmPassword !== null) {
+      data = {
+        ...data,
+        confirmPassword
+      }
+    }
+
+    try {
+      const response = await api.put('/me',
+        data
+      )
+  
+      if(response.data.error) {
+        toast({
+          title: "Erro ao atualizar perfil",
+          description: response.data.error,
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        })
+      }else {
+        toast({
+          title: "Perfil atualizado com sucesso",
+          description: "Suas informações foram atualizadas :)",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        })
+      }
+    }catch (err) {
+      toast({
+        title: "Erro ao atualizar perfil",
+        description: "Tente novamente mais tarde",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      })
+    }
   }
 
   return (
@@ -114,6 +194,7 @@ export default function MeuPerfil() {
               _focus={{
                 boxShadow: 'none'
               }}
+              isLoading={formState.isSubmitting}
             >
               SALVAR
             </Button>

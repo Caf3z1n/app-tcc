@@ -21,7 +21,7 @@ export default function Usuarios() {
       <Flex flexDirection="column" p="0 1rem">
         <Container alignItems="center" shadow="md" border="2px" borderColor="cores.cinzaBorda" maxW="1480px" mt="2rem" bgColor="#FFF" mb="1rem" borderRadius="0.5rem" p="2rem">
           <Flex overflowX="auto" flexDirection="column" alignItems="center">
-            <Text color="cores.cinzaEscuro" fontSize="1.5rem" mb="2rem" fontWeight="medium">Todas as palestras</Text>
+            <Text color="cores.cinzaEscuro" fontSize="1.5rem" mb="2rem" fontWeight="medium">Todos os usuários</Text>
             {
               !isLoading && !!data && data.usuarios.length >= 1 && (
                 <>
@@ -86,6 +86,13 @@ export const getServerSideProps = withSSRAuth(async (ctx) => {
     return {
       redirect: {
         destination: '/palestrante/minhas-palestras',
+        permanent: false,
+      }
+    }
+  }else if (token.nivel === 2) {
+    return {
+      redirect: {
+        destination: '/espectador/inscrever-se-palestras',
         permanent: false,
       }
     }

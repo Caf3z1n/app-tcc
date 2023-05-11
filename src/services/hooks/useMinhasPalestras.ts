@@ -65,6 +65,6 @@ export async function getMinhasPalestras({ page }: getMinhasPalestrasProps): Pro
 
 export function useMinhasPalestras({ page }: useMinhasPalestrasProps) {
   return useQuery(['minhas-palestras', [{ page }]], () => getMinhasPalestras({ page }), {
-    staleTime: 1000 * 1
+    staleTime: 1000 * 60
   })
 }
