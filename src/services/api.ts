@@ -5,8 +5,8 @@ export function setupAPIClient(ctx = undefined) {
   let cookies = parseCookies(ctx);
 
   const api = axios.create({
-    baseURL: 'http://localhost:3334',
-    //baseURL: 'https://api.tcc.eticasistemas.com.br',
+    //baseURL: 'http://localhost:3334',
+    baseURL: 'https://api.tcc.eticasistemas.com.br',
     headers: {
       Authorization: `Bearer: ${cookies['webnar-athon.token']}`
     }
