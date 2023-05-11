@@ -23,12 +23,12 @@ export default function Eventos() {
         <Container alignItems="center" shadow="md" border="2px" borderColor="cores.cinzaBorda" maxW="1480px" mt="2rem" bgColor="#FFF" mb="1rem" borderRadius="0.5rem" p="2rem">
           <Flex overflowX="auto" flexDirection="column" alignItems="center">
             <Text color="cores.cinzaEscuro" fontSize="1.5rem" mb="2rem" fontWeight="medium">Todos os eventos</Text>
+            <Flex w="100%" justifyContent="right" mb="2rem">
+              <NovoEvento refetch={refetch} />
+            </Flex>
             {
               !isLoading && !!data && data.eventos.length >= 1 && (
                 <>
-                  <Flex w="100%" justifyContent="right" mb="2rem">
-                    <NovoEvento refetch={refetch} />
-                  </Flex>
                   <Table overflowX="auto">
                     <Thead>
                       <Tr textAlign="center">
