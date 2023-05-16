@@ -29,7 +29,7 @@ export const theme = extendTheme({
         },
       },
       html: {
-        fontSize: ['12px', '14px']
+        fontSize: ['6px', '14px']
       }
     }
   }

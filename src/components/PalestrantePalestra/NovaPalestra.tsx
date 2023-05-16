@@ -111,7 +111,7 @@ export function NovaPalestra({ refetch }: NovaPalestraProps) {
         _focus={{
           boxShadow: 'none'
         }}
-        leftIcon={<Icon mb="0.1rem" as={RiAddLine} fontSize="25" />}
+        leftIcon={<Icon mb="0.1rem" as={RiAddLine} fontSize="2rem" />}
         onClick={onOpen}
       >
         Nova palestra

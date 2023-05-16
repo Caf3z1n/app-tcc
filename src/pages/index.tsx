@@ -58,7 +58,7 @@ export default function Home() {
           !isLoading && (
             <Flex flexDirection="column" alignItems="center" mb="2rem">
               <Text mb="2rem" color="cores.preto" fontSize="2rem" fontWeight="bold">Eventos disponíveis</Text>
-              <Grid templateColumns="repeat(3, 1fr)" gap="2rem" mb="4rem">
+              <Grid templateColumns={["repeat(2, 1fr)", "repeat(3, 1fr)"]} gap="2rem" mb="4rem">
                 {
                   data?.eventos_ativos.map((evento) => {
                     return (
@@ -69,7 +69,7 @@ export default function Home() {
               </Grid>
 
               <Text mb="2rem" color="cores.preto" fontSize="2rem" fontWeight="bold">Eventos finalizados</Text>
-              <Grid templateColumns="repeat(3, 1fr)" gap="2rem">
+              <Grid templateColumns={["repeat(2, 1fr)", "repeat(3, 1fr)"]} gap="2rem">
                 {
                   data?.eventos_passados.map((evento) => {
                     return (

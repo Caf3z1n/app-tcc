@@ -86,7 +86,7 @@ export function DetalhesPalestraInscricao({ palestra, refetch }: DetalhesPalestr
         _focus={{
           boxShadow: 'none'
         }}
-        leftIcon={<Icon mb="0.1rem" as={RiExternalLinkFill} fontSize="20" />}
+        leftIcon={<Icon mb="0.1rem" as={RiExternalLinkFill} fontSize="1.5rem" />}
         onClick={onOpen}
       >
         Abrir

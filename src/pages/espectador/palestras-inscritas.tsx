@@ -47,7 +47,6 @@ export default function InscreverSePalestras() {
                       <Tr textAlign="center">
                       <Th fontSize="1.1rem" color="cores.cinza" fontWeight="normal">Palestrante</Th>
                         <Th fontSize="1.1rem" color="cores.cinza" fontWeight="normal">Título da palestra</Th>
-                        <Th fontSize="1.1rem" color="cores.cinza" fontWeight="normal">Tipo</Th>
                         <Th fontSize="1.1rem" color="cores.cinza" fontWeight="normal">Inicio</Th>
                         <Th fontSize="1.1rem" color="cores.cinza" fontWeight="normal">Fim</Th>
                         <Th fontSize="1.1rem" color="cores.cinza" fontWeight="normal" textAlign="center">Presença</Th>
@@ -61,7 +60,6 @@ export default function InscreverSePalestras() {
                             <Tr key={palestra.id}>
                               <Td fontWeight="bold" color="cores.cinzaEscuro">{palestra.palestrante.nome}</Td>
                               <Td fontWeight="bold" color="cores.laranja">{palestra.nome}</Td>
-                              <Td fontWeight="medium" color="cores.cinza">{palestra.tipo === 0 ? 'Presencial' : palestra.tipo === 1 ? 'Presencial e Virtual': 'Virtual'}</Td>
                               <Td fontWeight="medium" color="cores.cinza">{format(parseISO(palestra.data_inicio), 'dd/MM/yyyy HH:mm')}</Td>
                               <Td fontWeight="medium" color="cores.cinza">{format(parseISO(palestra.data_fim), 'dd/MM/yyyy HH:mm')}</Td>
                               {

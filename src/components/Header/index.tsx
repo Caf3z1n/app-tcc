@@ -22,7 +22,7 @@ export default function Header({ listaPalestras = true }: HeaderProps) {
   return (
     <>
       <Flex shadow="md" justifyContent="center" bgColor='#fff'>
-        <Flex p="0 4rem" alignItems="center" justifyContent="space-between" w="100%" h="120px" maxW="1480px" bgImg="../header.svg" bgRepeat="no-repeat" >
+        <Flex p="0 4rem" alignItems="center" justifyContent="space-between" w="100%" h={["50px", "120px"]} maxW="1480px" bgImg={["../header2.svg", "../header.svg"]} bgRepeat="no-repeat">
           <Icon onClick={OpenCloseNavigation} cursor="pointer" as={RiMenuLine} color="cores.preto" fontSize="2rem" />
           <Image src="../logo.svg" alt="logo" w="10rem" />
           <Text />

@@ -22,7 +22,7 @@ export default function AssistirPalestra() {
                 <Text fontWeight="bold" fontSize="2rem" color="cores.cinzaEscuro">{data.espectadorPalestra.palestra.nome}</Text>
                 <Text fontWeight="medium" fontSize="1.5rem" color="cores.cinzaEscuro">Apresentado por {data.espectadorPalestra.palestra.palestrante.nome}</Text>
               </Flex>
-              <iframe width="100%" height="750" src={`https://www.youtube.com/embed/${data.espectadorPalestra.palestra.link}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+              <Flex as="iframe" width="100%" height="53rem" src={`https://www.youtube.com/embed/${data.espectadorPalestra.palestra.link}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></Flex>
             </Container>
           </Flex>
         )

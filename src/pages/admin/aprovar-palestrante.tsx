@@ -49,12 +49,12 @@ export default function AprovarPalestrante() {
       <Header />
       <Flex flexDirection="column" p="0 1rem">
         <Container alignItems="center" shadow="md" border="2px" borderColor="cores.cinzaBorda" maxW="1480px" mt="2rem" bgColor="#FFF" mb="1rem" borderRadius="0.5rem" p="2rem">
-          <Flex overflowX="auto" flexDirection="column" alignItems="center">
+          <Flex flexDirection="column" alignItems="center">
             <Text color="cores.cinzaEscuro" fontSize="1.5rem" mb="2rem" fontWeight="medium">Aprovar solicitações de palestrantes</Text>
             {
               !isLoading && !!data && data.palestrantes.length >= 1 && (
                 <>
-                  <Table overflowX="auto">
+                  <Table>
                     <Thead>
                       <Tr textAlign="center">
                         <Th fontSize="1.1rem" color="cores.cinza" fontWeight="normal">Foto</Th>

@@ -107,7 +107,7 @@ export function NovoUsuario({ refetch }: NovoUsuarioProps) {
         _focus={{
           boxShadow: 'none'
         }}
-        leftIcon={<Icon mb="0.1rem" as={RiAddLine} fontSize="25" />}
+        leftIcon={<Icon mb="0.1rem" as={RiAddLine} fontSize="2rem" />}
         onClick={onOpen}
       >
         Novo usuário
