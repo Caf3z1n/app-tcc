@@ -51,6 +51,7 @@ export async function getAssistirPalestra({ id }: getAssistirPalestraProps): Pro
 
 export function useAssistirPalestra({ id }: useAssistirPalestraProps) {
   return useQuery(['assistir-palestra'], () => getAssistirPalestra({ id }), {
-    staleTime: 1000 * 60 * 2
+    staleTime: 1000 * 30,
+    refetchInterval: 1000 * 30
   })
 }
