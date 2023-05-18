@@ -19,6 +19,7 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import { format, parseISO } from 'date-fns';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { RiExternalLinkFill } from 'react-icons/ri'
 import { api } from '../../services/apiClient';
@@ -31,6 +32,7 @@ type DetalhesPalestraInscricaoProps = {
 
 export function DetalhesPalestraInscrito({ palestra }: DetalhesPalestraInscricaoProps) {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const router = useRouter();
   
   return (
     <>
@@ -87,6 +89,22 @@ export function DetalhesPalestraInscrito({ palestra }: DetalhesPalestraInscricao
                 <Text mb="0.3rem">Dia da palestra: {format(parseISO(palestra.data_inicio), 'dd/MM/yyyy')}</Text>
                 <Text mb="0.3rem">Horário do inicio: <strong>{format(parseISO(palestra.data_inicio), 'HH:mm')}</strong></Text>
                 <Text mb="0.3rem">Horário do Fim: <strong>{format(parseISO(palestra.data_fim), 'HH:mm')}</strong></Text>
+                {
+                  palestra.link !== '' && (
+                    <Button
+                      type="button"
+                      colorScheme="green"
+                      color="cores.branco"
+                      size="md"
+                      _focus={{
+                        boxShadow: 'none'
+                      }}
+                      onClick={() => router.push(`/assistir-palestra/${palestra.id}`)}
+                    >
+                      Assistir 
+                    </Button>
+                  )
+                }
               </Box>
             </VStack>
           </ModalBody>

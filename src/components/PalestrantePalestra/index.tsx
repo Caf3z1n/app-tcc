@@ -146,17 +146,21 @@ export function DetalhesPalestra({ palestra, refetch }: AprovarReprovarPalestraP
                 <Text mb="0.3rem">Dia da palestra: {format(parseISO(palestra.data_inicio), 'dd/MM/yyyy')}</Text>
                 <Text mb="0.3rem">Horário do inicio: <strong>{format(parseISO(palestra.data_inicio), 'HH:mm')}</strong></Text>
                 <Text mb="0.3rem">Horário do Fim: <strong>{format(parseISO(palestra.data_fim), 'HH:mm')}</strong></Text>
-                <Grid w="100%" gap="4" templateColumns="repeat(1, 1fr)" mt="1rem">
-                  <GridItem colSpan={1}>
-                    <Input
-                      name="link"
-                      label="Link da palestra:"
-                      placeholder="Preencher se já tiver o link da transmissão"
-                      value={link}
-                      onChange={(e) =>setLink(e.target.value)}
-                    />
-                  </GridItem>
-                </Grid>
+                {
+                  palestra.tipo !== 0 && (
+                  <Grid w="100%" gap="4" templateColumns="repeat(1, 1fr)" mt="1rem">
+                      <GridItem colSpan={1}>
+                        <Input
+                          name="link"
+                          label="Link da palestra:"
+                          placeholder="Informar os caracteres depois do v="
+                          value={link}
+                          onChange={(e) =>setLink(e.target.value)}
+                        />
+                      </GridItem>
+                    </Grid>
+                  )
+                }
               </Box>
             </VStack>
           </ModalBody>
@@ -179,19 +183,23 @@ export function DetalhesPalestra({ palestra, refetch }: AprovarReprovarPalestraP
                 </Button>
               )
             }
-            <Button
-              type="button"
-              colorScheme="green"
-              color="cores.branco"
-              size="md"
-              _focus={{
-                boxShadow: 'none'
-              }}
-              onClick={handleSalvarLink}
-              isLoading={loading}
-            >
-              Salvar
-            </Button>
+            {
+              palestra.tipo !== 0 && (
+                <Button
+                  type="button"
+                  colorScheme="green"
+                  color="cores.branco"
+                  size="md"
+                  _focus={{
+                    boxShadow: 'none'
+                  }}
+                  onClick={handleSalvarLink}
+                  isLoading={loading}
+                >
+                  Salvar
+                </Button>
+              )
+            }
           </ModalFooter>
         </ModalContent>
       </Modal>

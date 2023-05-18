@@ -17,13 +17,13 @@ import {
 } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup';
 import Router from 'next/router';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { RiAddLine } from 'react-icons/ri'
 import * as yup from 'yup';
 import { api } from '../../services/apiClient';
 import { useHomeEventos } from '../../services/hooks/useHomeEventos';
-import { addHours, parseISO } from 'date-fns'
+import { parseISO } from 'date-fns'
 
 import { Input } from '../Form/Input';
 import SelectEvento from './SelectEvento';
@@ -55,6 +55,7 @@ export function NovaPalestra({ refetch }: NovaPalestraProps) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [ evento, setEvento ] = useState(0);
   const [ tipo, setTipo ] = useState(0);
+  const [link, setLink] = useState('')
 
   const { data: eventos } = useHomeEventos();
 
@@ -64,6 +65,12 @@ export function NovaPalestra({ refetch }: NovaPalestraProps) {
 
   const { errors } = formState;
   const toast = useToast();
+
+  useEffect(() => {
+    if(tipo === 0) {
+      setLink('')
+    }
+  }, [tipo])
 
   const handleCadastrar: SubmitHandler<NovaPalestraFormData> = async ({ nome, local, descricao, data_inicio, data_fim, link }) => {
     try {
@@ -188,9 +195,12 @@ export function NovaPalestra({ refetch }: NovaPalestraProps) {
                 <Input
                     name="link"
                     label="Link da palestra"
-                    placeholder="Preencher se já tiver o link da transmissão"
+                    placeholder="Informar os caracteres depois do v="
                     {...register('link')}
                     error={errors.link}
+                    value={link}
+                    onChange={(e) => setLink(e.target.value)}
+                    isDisabled={tipo === 0 ? true : false}
                   />
                 </GridItem>
               </Grid>
