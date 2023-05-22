@@ -30,6 +30,28 @@ export default function Home() {
               _focus={{
                 boxShadow: 'none'
               }}
+              onClick={() => Router.push('/validar-certificado')}
+            >
+              Validar certificados
+            </Button>
+            <Button
+              type="button"
+              bgColor="cores.branco"
+              color="cores.laranja"
+              border="2px"
+              size="md"
+              mr="1rem"
+              _hover={{
+                bgColor: "rgba(0, 0, 0, 0.04)",
+                color: 'cores.laranjaEscuro'
+              }}
+              _active={{
+                bgColor: "rgba(0, 0, 0, 0.06)",
+                color: 'cores.laranjaEscuro2'
+              }}
+              _focus={{
+                boxShadow: 'none'
+              }}
               onClick={() => Router.push('/cadastro')}
             >
               Cadastrar-se
