@@ -4,6 +4,7 @@ import { withSSRAuth } from "../../utils/withSSRAuth";
 import { useRouter } from 'next/router';
 import { Container, Flex, Text } from "@chakra-ui/react";
 import { useAssistirPalestra } from "../../services/hooks/useAssistirPalestra";
+import { differenceInMinutes, parseISO } from "date-fns";
 
 export default function AssistirPalestra() {
   const router = useRouter();
@@ -23,6 +24,8 @@ export default function AssistirPalestra() {
                 <Text fontWeight="medium" fontSize="1.5rem" color="cores.cinzaEscuro">Apresentado por {data.espectadorPalestra.palestra.palestrante.nome}</Text>
               </Flex>
               <Flex as="iframe" width="100%" height="53rem" src={`https://www.youtube.com/embed/${data.espectadorPalestra.palestra.link}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></Flex>
+              <Text mt="2rem" fontWeight="medium" fontSize="1.2rem" color="cores.cinzaEscuro">Participação: <strong>{` ${data.participacao}%`}</strong>
+              </Text>
             </Container>
           </Flex>
         )

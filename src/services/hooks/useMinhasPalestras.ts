@@ -55,7 +55,7 @@ type useMinhasPalestrasProps = {
 }
 
 export async function getMinhasPalestras({ page }: getMinhasPalestrasProps): Promise<getMinhasPalestrasResponse> {
-  const { data } = await api.get('/palestras');
+  const { data } = await api.get(`/palestras?paginaAtual=${page}`);
 
   return {
     palestras: data.palestras,
