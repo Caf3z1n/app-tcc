@@ -1,4 +1,4 @@
-import { Flex, Stack, Button, Image, useToast }  from '@chakra-ui/react';
+import { Flex, Stack, Button, Image, useToast, Text }  from '@chakra-ui/react';
 
 import { Input } from '../components/Form/Input';
 import { withSSRGuest } from '../utils/withSSRGuest';
@@ -8,6 +8,7 @@ import { api } from '../services/apiClient';
 
 export default function ValidarCetificado() {
   const [certificado, setCertificado] = useState('')
+  const [downloadCertificado, setDownloadCertificado] = useState(null)
   const [loading, setLoading] = useState(false)
   const toast = useToast();
 
@@ -17,6 +18,7 @@ export default function ValidarCetificado() {
       const response = await api.get(`/certificados/${certificado}`)
 
       if(response.data.message === 'Certificado inválido') {
+        setDownloadCertificado(null)
         toast({
           title: 'Certificado inválido',
           status: "error",
@@ -24,6 +26,7 @@ export default function ValidarCetificado() {
           isClosable: true,
         })
       }else {
+        setDownloadCertificado(response.data.certificado.url)
         toast({
           title: 'Certificado válido',
           status: "success",
@@ -39,8 +42,13 @@ export default function ValidarCetificado() {
         duration: 2000,
         isClosable: true,
       })
+      setDownloadCertificado(null)
     }
     setLoading(false)
+  }
+
+  async function handleCertificado() {
+    window.open(downloadCertificado, '_blank')
   }
   
   return (
@@ -70,6 +78,22 @@ export default function ValidarCetificado() {
             value={certificado}
             onChange={(e) => setCertificado(e.target.value)}
           />
+          {
+            !!downloadCertificado && (
+              <Button
+                type="button"
+                colorScheme="green"
+                color="cores.branco"
+                size="sm"
+                _focus={{
+                  boxShadow: 'none'
+                }}
+                onClick={() => handleCertificado()}
+              >
+                CONFERIR CERTIFICADO
+              </Button>
+            )
+          }
           <Button
             type="submit"
             mt="1.75rem"
