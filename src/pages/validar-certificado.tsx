@@ -14,7 +14,7 @@ export default function ValidarCetificado() {
   async function handleValidar() {
     setLoading(true)
     try {
-      const response = await api.get(`/validar-certificado/${certificado}`)
+      const response = await api.get(`/certificados/${certificado}`)
 
       if(response.data.message === 'Certificado inválido') {
         toast({
