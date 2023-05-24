@@ -19,6 +19,7 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import { format, parseISO } from 'date-fns';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { RiExternalLinkFill } from 'react-icons/ri'
 import { api } from '../../services/apiClient';
@@ -36,6 +37,7 @@ export function DetalhesPalestra({ palestra, refetch }: AprovarReprovarPalestraP
   const [loading, setLoading] = useState(false)
   const [loading2, setLoading2] = useState(false)
   const toast = useToast();
+  const router = useRouter();
 
   async function handleSalvarLink() {
     setLoading(true);
@@ -172,14 +174,37 @@ export function DetalhesPalestra({ palestra, refetch }: AprovarReprovarPalestraP
                   colorScheme="red"
                   color="cores.branco"
                   size="md"
+                  m="0.5rem"
                   _focus={{
                     boxShadow: 'none'
                   }}
-                  mr="1rem"
                   onClick={handleCancelarPalestra}
                   isLoading={loading2}
                 >
                   Cancelar palestra
+                </Button>
+              )
+            }
+            {
+              palestra.ativo === true && (
+                <Button
+                  type="button"
+                  bgColor="cores.laranja"
+                  color="cores.branco"
+                  size="md"
+                  m="0.5rem"
+                  _hover={{
+                    bg: 'cores.laranjaEscuro'
+                  }}
+                  _active={{
+                    bg: 'cores.laranjaEscuro2'
+                  }}
+                  _focus={{
+                    boxShadow: 'none'
+                  }}
+                  onClick={() => router.push(`/palestrante/liberar-certificado/${palestra.id}`)}
+                >
+                  Liberar certificados
                 </Button>
               )
             }
@@ -189,6 +214,7 @@ export function DetalhesPalestra({ palestra, refetch }: AprovarReprovarPalestraP
                   type="button"
                   colorScheme="green"
                   color="cores.branco"
+                  m="0.5rem"
                   size="md"
                   _focus={{
                     boxShadow: 'none'

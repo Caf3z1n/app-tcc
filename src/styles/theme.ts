@@ -23,7 +23,7 @@ export const theme = extendTheme({
     global: {
       body: {
         bg: 'cores.fundo',
-        bgImage: '../fundo.svg',
+        bgImage: '../../fundo.svg',
         _focus: {
           boxShadow: 'none'
         },
