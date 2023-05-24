@@ -55,7 +55,7 @@ type useAdminPalestrasProps = {
 }
 
 export async function getAdminPalestras({ page }: getAdminPalestrasProps): Promise<getAdminPalestrasResponse> {
-  const { data } = await api.get('/admin-palestras');
+  const { data } = await api.get(`/admin-palestras?paginaAtual=${page}`);
 
   return {
     palestras: data.palestras,

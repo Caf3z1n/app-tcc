@@ -111,14 +111,7 @@ export const getServerSideProps = withSSRAuth(async (ctx) => {
   const cookies = parseCookies(ctx);
   const token: { nivel: number } = decode(cookies['webnar-athon.token']);
 
-  if (token.nivel === 0 ) {
-    return {
-      redirect: {
-        destination: '/admin/aprovar-palestrante',
-        permanent: false,
-      }
-    }
-  }else if (token.nivel === 2) {
+  if (token.nivel === 2) {
     return {
       redirect: {
         destination: '/espectador/inscrever-se-palestras',
