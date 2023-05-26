@@ -77,9 +77,9 @@ export function Navigation({ isOpen, OpenCloseNavigation }: NavigationProps) {
                   </>
                 )
               }
-              <NavSection title="MEU PERFIL"> 
+              <NavSection title="PERFIL"> 
                 <NavLink href="/meu-perfil" icon={RiUserSettingsLine}>
-                  Editar perfil
+                  Meu perfil
                 </NavLink>
               </NavSection>
             </Stack>

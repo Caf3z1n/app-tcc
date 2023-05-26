@@ -2,45 +2,55 @@ import { Flex, Stack, Button, Image, useToast }  from '@chakra-ui/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useContext } from 'react';
 
 import { Input } from '../components/Form/Input';
-import { AuthContext } from '../contexts/authContext';
 import { withSSRGuest } from '../utils/withSSRGuest';
 import Router from 'next/router';
+import { api } from '../services/apiClient';
 
 type SignInFormData = {
   email?: string;
-  password?: string;
 }
 
 const SignInFormSchema = yup.object().shape({
   email: yup.string().required('email obrigatório'),
-  password: yup.string().required('Senha obrigatória')
 })
 
-export default function SignIn() {
+export default function EsqueciSenha() {
   const { register, handleSubmit, formState } = useForm<SignInFormData>({
     resolver: yupResolver(SignInFormSchema),
   })
 
-  const { signIn } = useContext(AuthContext);
   const { errors } = formState;
   const toast = useToast();
 
-  const handleSignIn: SubmitHandler<SignInFormData> = async ({ email, password }) => {
-    const data = {
-      email: email || '',
-      password: password || '',
-    }
-
+  const handleNovaSenha: SubmitHandler<SignInFormData> = async ({ email }) => {
     try {
-      await signIn(data);
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const response = await api.post('/email', {
+        email,
+      })
+
+      if (response.data.erro) {
+        toast({
+          title: "Erro ao gerar nova senha",
+          description: response.data.erro,
+          status: "error",
+          duration: 2000,
+        isClosable: true,
+        })
+      }else {
+        toast({
+          title: "Nova senha enviada",
+          description: "Uma nova senha aleatória foi enviada ao email cadastrado",
+          status: "success",
+          duration: 5000,
+          isClosable: false,
+        })
+      }
     } catch (err) {
       toast({
-        title: "Erro ao logar-se.",
-        description: "Email ou senha incorretos.",
+        title: "Erro ao gerar nova senha",
+        description: "Tente novamente mais tarde",
         status: "error",
         duration: 2000,
         isClosable: true,
@@ -66,7 +76,7 @@ export default function SignIn() {
         flexDir="column"
         border="2px"
         borderColor="cores.cinzaBorda"
-        onSubmit={handleSubmit(handleSignIn)}
+        onSubmit={handleSubmit(handleNovaSenha)}
         shadow="lg"
       >
         <Image src="logo.svg" alt="logo" w="10rem" mb="2rem" />
@@ -77,14 +87,6 @@ export default function SignIn() {
             type="email"
             {...register('email')}
             error={errors.email}
-          />
-          <Input
-            name="senha"
-            label="Senha"
-            type="password"
-            mb="1rem"
-            {...register('password')}
-            error={errors.password}
           />
           <Button
             type="submit"
@@ -103,7 +105,7 @@ export default function SignIn() {
             }}
             isLoading={formState.isSubmitting}
           >
-            ENTRAR
+            GERAR NOVA SENHA
           </Button>
           <Button
             type="button"
@@ -123,29 +125,10 @@ export default function SignIn() {
             _focus={{
               boxShadow: 'none'
             }}
-            onClick={() => Router.push('/')}
+            onClick={() => Router.push('/login')}
           >
             VOLTAR
           </Button>
-          <Button
-              type="button"
-              bgColor="rgba(255, 255, 255, 0.01)"
-              color="cores.cinzaEscuro"
-              size="md"
-              mt="1.75rem"
-              _hover={{
-                bgColor: "rgba(255, 255, 255, 0.01)",
-              }}
-              _active={{
-                bg: 'rgba(255, 255, 255, 0.01)'
-              }}
-              _focus={{
-                boxShadow: 'none'
-              }}
-              onClick={() => Router.push('/esqueci-senha')}
-            >
-              Esqueceu a senha?
-            </Button>
         </Stack>
       </Flex>
     </Flex>

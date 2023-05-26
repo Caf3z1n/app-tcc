@@ -18,7 +18,7 @@ export default function Home() {
             <Button
               type="button"
               bgColor="rgba(255, 255, 255, 0.01)"
-              color="cores.preto"
+              color="cores.cinzaEscuro"
               size="md"
               mr="1rem"
               _hover={{
