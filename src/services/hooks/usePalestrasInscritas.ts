@@ -57,7 +57,7 @@ type usePalestrasInscritasProps = {
 }
 
 export async function getPalestrasInscritas({ page }: getPalestrasInscritasProps): Promise<getPalestrasInscritasResponse> {
-  const { data } = await api.get('/espectador-palestra', {
+  const { data } = await api.get(`/espectador-palestra?paginaAtual=${page}`, {
     
   });
 
