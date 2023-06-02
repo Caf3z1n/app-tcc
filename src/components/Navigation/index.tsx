@@ -1,7 +1,7 @@
-import { Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Stack } from '@chakra-ui/react'
+import { Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Icon, Stack, Text } from '@chakra-ui/react'
 import { useContext } from 'react'
-import { RiUserFollowLine, RiCheckboxMultipleLine, RiCalendarEventLine, RiVideoChatLine, RiUser3Line, RiUserSettingsLine, RiVideoDownloadLine, RiPictureInPicture2Line } from 'react-icons/ri'
-import { AuthContext } from '../../contexts/authContext'
+import { RiUserFollowLine, RiCheckboxMultipleLine, RiCalendarEventLine, RiVideoChatLine, RiUser3Line, RiUserSettingsLine, RiVideoDownloadLine, RiPictureInPicture2Line, RiLogoutBoxRLine } from 'react-icons/ri'
+import { AuthContext, signOut } from '../../contexts/authContext'
 import { NavLink } from './NavLink'
 import { NavSection } from './NavSection'
 
@@ -81,6 +81,12 @@ export function Navigation({ isOpen, OpenCloseNavigation }: NavigationProps) {
                 <NavLink href="/meu-perfil" icon={RiUserSettingsLine}>
                   Meu perfil
                 </NavLink>
+                <Flex alignItems="center" cursor="pointer" onClick={signOut}>
+                  <Icon color="red.300" fontSize="1.5rem" as={RiLogoutBoxRLine} mr="0.5rem" />
+                  <Text color="red.300" fontWeight="medium" >
+                    Deslogar
+                  </Text>
+                </Flex>
               </NavSection>
             </Stack>
           </DrawerBody>

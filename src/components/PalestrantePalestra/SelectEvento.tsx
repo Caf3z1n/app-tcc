@@ -1,4 +1,5 @@
 import { Flex, FormLabel, Select } from "@chakra-ui/react";
+import { format, parseISO } from "date-fns";
 import { useHomeEventos } from "../../services/hooks/useHomeEventos";
 import { Evento } from "../../services/hooks/useHomeEventos";
 
@@ -22,7 +23,7 @@ export default function SelectEvento({ eventos, evento, setEvento }: SelectEvent
         {
           eventos.map((eventoA) => {
             return (
-              <option key={eventoA.id} value={eventoA.id}>{eventoA.nome}</option>
+              <option key={eventoA.id} value={eventoA.id}>{eventoA.nome} ({format(parseISO(eventoA.data_inicio), 'dd/MM')} a {format(parseISO(eventoA.data_fim), 'dd/MM')})</option>
             )
           })
         }
